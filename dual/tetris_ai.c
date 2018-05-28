@@ -51,10 +51,10 @@ void init_ai(void)
      set_cursor(False);
      /* Init terminal (for non blocking & noecho getchar();
       이것을 위로 옮긴 이유는 처음부터 껌벅커서를 지우기 위해*/
-     tcgetattr(STDIN_FILENO, &term);
+  /*   tcgetattr(STDIN_FILENO, &term);
      tcgetattr(STDIN_FILENO, &back_attr);
      term.c_lflag &= ~(ICANON|ECHO);
-     tcsetattr(0, TCSANOW, &term);
+     tcsetattr(0, TCSANOW, &term);*/
     /*스타트함수를 init에 통합했다*/
      //set_cursor(False); //커서없애줌
  /*
@@ -86,22 +86,22 @@ void init_ai(void)
      current2.next = nrand(0, 7);//다음 블록의 종류를 정함
 
      /* Score(오른쪽에 표시되는 안내사항을 보여주는 */
-     printxy(0, FRAMEH_NB + 1, FRAMEW + 3, "Level :");
-     printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
-     printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
-     printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←"); 
-     printxy(0, FRAMEH_NB + 5, FRAMEW + 3, "Right : →"); 
-     printxy(0, FRAMEH_NB + 6, FRAMEW + 3, "Change: ↑");
-     printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓"); 
-     printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
-     printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p"); 
-     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
-     printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Life : ");
-     printxy(0, FRAMEH_NB + 12, FRAMEW + 3, "Quit  : q"); 
+     printxy(0, FRAMEH_NB + 1, FRAMEW + 53, "Level :");
+     printxy(0, FRAMEH_NB + 2, FRAMEW + 53, "Score :");
+     printxy(0, FRAMEH_NB + 3, FRAMEW + 53, "Lines :");
+     printxy(0, FRAMEH_NB + 4, FRAMEW + 53, "Left  : ←");
+     printxy(0, FRAMEH_NB + 5, FRAMEW + 53, "Right : →");
+     printxy(0, FRAMEH_NB + 6, FRAMEW + 53, "Change: ↑");
+     printxy(0, FRAMEH_NB + 7, FRAMEW + 53, "Down  : ↓");
+     printxy(0, FRAMEH_NB + 8, FRAMEW + 53, "Drop  : Space Bar");
+     printxy(0, FRAMEH_NB + 9, FRAMEW + 53, "Pause : p");
+     printxy(0, FRAMEH_NB + 10, FRAMEW + 53, "Revive : r");
+     printxy(0, FRAMEH_NB + 11, FRAMEW + 53, "Life : ");
+     printxy(0, FRAMEH_NB + 12, FRAMEW + 53, "Quit  : q");
      DRAW_SCORE2();
 
      /* Init signal */
-     sigemptyset(&siga.sa_mask);
+/*     sigemptyset(&siga.sa_mask);
      siga.sa_flags = 0;
      siga.sa_handler = sig_handler;
      sigaction(SIGALRM, &siga, NULL);
@@ -109,10 +109,10 @@ void init_ai(void)
      sigaction(SIGINT,  &siga, NULL);
      sigaction(SIGSEGV, &siga, NULL);
 
-     /* Init timer */
+      Init timer
      tv.it_value.tv_usec = TIMING;
      sig_handler(SIGALRM);
- 
+ */
      return;
 }
 
@@ -197,12 +197,12 @@ void quit_ai() {
     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미,
 
     printf("\n\n\t수고하셨습니다. 컴퓨터님의 레벨 %d, 점수는: %d입니다.\n\n", level2, score2);
-    printf("\n\n\t\t\tpress enter to end the game!\n");
+ /*   printf("\n\n\t\t\tpress enter to end the game!\n");
     while (1) {
         end = getchar();
         if (end == '\n')
             break;
-    }
+    }*/
     set_cursor(True);
     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
     system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
@@ -214,20 +214,6 @@ void quit_ai() {
 
 void playAI()
 {
-    /*변수들*/
-     level2 = 1;
-     int n =1, i;
-     int x = 0, y = 50;
-     current2.last_move = False;
-     lifes2 = 2;
-     lines2 = 0;
-
-     init_ai(); //게임 진행중에도 게임 사용법 보여
-     frame_init_ai(x, y);
-     frame_nextbox_init_ai(x, y);
-      //여기까지 게임을 초기화하는 부분
-    
-
      buf = 0;
 	 //buf = current.x;
      while(running2)
@@ -238,8 +224,8 @@ void playAI()
       	shape_set_ai();
       	if(score2<2000)       //레벨 5가 되면 블록이 안보임
 	  	    {
-            frame_refresh_ai(x, y);
-            frame_preview_ai(x, y);
+            frame_refresh_ai(0, 50);
+            frame_preview_ai(0, 50);
           }
       
       	 AI_shape_go_down(DEFAULT_COEFS);
@@ -247,22 +233,24 @@ void playAI()
       	if(score2> 2000)
 	       printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
 
-      	if(n >=1 && score2 >= 100)
+/*      	if(n >=1 && score2 >= 100)
         {
           	n--;
              block_down_ai();
-        }
+        }*/
+		if (score2 >= 100) {
 
-        if(ranNum == 108 )
-          	n++;
+			block_down_ai();
+		}
 
-		for (i = 2; i < FRAMEW - 1; i++) {
+/*        if(ranNum == 108 )
+          	n++;*/
+
+		for (int i = 2; i < FRAMEW - 1; i++) {
 			if (frame2[1][i] != 0) {
 				running2 = False;
 			}
 		}
      }	//이것이 게임루프의 주축이 되는 부분
-     
-     quit_ai();
 
 }

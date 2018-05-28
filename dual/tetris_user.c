@@ -14,12 +14,12 @@ char* first(char * name) {
     char start;
     printf("\n\n\t당신의 이름은? ");
     scanf("%s", name);
-    printf("\n\n\t\t\tpress enter to enter game!");     //tab세번이 적절
-    while (1) {
+    //printf("\n\n\t\t\tpress enter to enter game!");     //tab세번이 적절
+ /*   while (1) {
         start = getchar();
         if (start == '\n')
             break;
-    }
+    }*/
     return name;
 }
 void init_user(void) {
@@ -38,7 +38,7 @@ void init_user(void) {
     tcsetattr(0, TCSANOW, &term);
     /*스타트함수를 init에 통합했다*/
     //set_cursor(False); //커서없애줌
-    printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
+ /*   printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
     printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
     printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←");
     printxy(0, FRAMEH_NB + 5, FRAMEW + 3, "Right : →");
@@ -47,12 +47,12 @@ void init_user(void) {
     printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
     printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p");
     printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
-    printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Quit  : q");
+    printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Quit  : q");*/
     //게임 시작하기 전에 안내를 한번 해줌
 
-    clear_term(); //화면 지움
-    /* Make rand() really random :) */
-    srand(getpid());
+   // clear_term(); //화면 지움
+    /* Make rand() really random :)
+    srand(getpid());*/
 
     /* Init variables */
     score1 = 0;
@@ -236,12 +236,12 @@ void quit_user(char * name) {
     }
     fclose(rp);
 
-    printf("\n\n\t\t\tpress enter to end the game!\n");
+/*    printf("\n\n\t\t\tpress enter to end the game!\n");
     while (1) {
         end = getchar();
         if (end == '\n')
             break;
-    }
+    }*/
     set_cursor(True);
     tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
     system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
@@ -251,27 +251,16 @@ void quit_user(char * name) {
 }
 
 void playUser() {
-    /*변수들*/
-    level1 = 1;
-    int n = 1;
-    current1.last_move = False;
-    lifes1 = 2;
-    lines1 = 0;
-    char myname[10];
 
-    first(myname);
-    init_user(); //게임 진행중에도 게임 사용법 보여
-    frame_init_user();
-    frame_nextbox_init_user();
-    ;
+   // int n = 1;
     //여기까지 게임을 초기화하는 부분
 
-    while (running1) {
         int ranNum = nrand(1, 300);
+
         get_key_event();
         shape_set_user();
         if (score1 < 2000)       //레벨 5가 되면 블록이 안보임
-                {
+         {
             frame_refresh_user();
             frame_preview_user();
         }
@@ -281,17 +270,15 @@ void playUser() {
         if (score1 > 2000)
             printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
 
-        if (n >= 1 && score1 >= 100) {
-            n--;
+     /*   if (n >= 1 && score1 >= 100) {*/
+        if (score1 >= 100) {
+         //   n--;
             block_down_user();
         }
 
-        if (ranNum == 108)
-            n++;
-    }    //이것이 게임루프의 주축이 되는 부분
-
-    quit_user(myname);
-
+      /*  if (ranNum == 108)
+            n++;*/
+        //이것이 게임루프의 주축이 되는 부분
 }
 
 

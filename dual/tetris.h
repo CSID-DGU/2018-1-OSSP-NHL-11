@@ -70,10 +70,10 @@
      set_color(0);
 
 #define DRAW_SCORE2() set_color(Score);                              \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 10, level2);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 10, score2);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 10, lines2);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 10, lifes2);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 60, level2);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 60, score2);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 60, lines2);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 60, lifes2);   \
      set_color(0);
 
 /* Bool type */
