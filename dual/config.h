@@ -1,3 +1,13 @@
+/*
+ * config.h
+ *
+ *  Created on: 2018. 5. 15.
+ *      Author: kny
+ */
+
+#ifndef CONFIG_H_
+#define CONFIG_H_
+
 /* Configuration of tty-tetris
  * Need to re-compile to set the change.
  */
@@ -19,3 +29,5 @@
 
 /* Timing in milisecond */
 #define TIMING 300000
+
+#endif /* CONFIG_H_ */

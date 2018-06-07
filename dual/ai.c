@@ -4,21 +4,21 @@
 #include "tetris.h"
 
 void AI_shape_go_down(float *coefs) {
-    shape_unset_ai();
+    shape_unset();
     float moveHeu, bestMoveHeu = -FLT_MAX;
     int rotate, width, upper, count = 0;
     int x = 0, y = 50;
     float temp;
     for (rotate = 0; rotate < 4; rotate++)
     {
-        shape_set_position_ai(rotate);
+        shape_set_position(rotate);
         for (width = 2; width < FRAMEW - 1; width += 2)
         {
-            if (!check_possible_pos_ai(buf, width))//) && buf < FRAMEH - 2)
+            if (!check_possible_pos(buf, width))//) && buf < FRAMEH - 2)
              {
               for(upper = buf; upper > 1; upper--)
                 {
-                    if(frame2[upper][width] != 0)
+                    if(frame[upper][width] != 0)
                     {
                         count++;
                     }
@@ -31,17 +31,17 @@ void AI_shape_go_down(float *coefs) {
                 temp = heuristic(coefs);
                 if (bestMoveHeu < temp)
                 {
-                    //sleep(1);
+                    sleep(1);
                     bestMoveHeu = temp;
-                    current2.y = width;
-                    current2.x = buf;
+                    current.y = width;
+                    current.x = buf;
                     //current.pos = rotate;
                     // current.pos;
                 }
             }
             else if (buf >= FRAMEH - 2)
              {
-                   shape_new_ai(x, y);
+                   shape_new(x, y);
                    bestMoveHeu = -FLT_MAX;
                    buf = 0;
              }
@@ -71,20 +71,20 @@ int countHoles()
     {
         for(j=2;j<FRAMEW-1;j+=2)
         {
-            if(frame2[i][j]!=0)
+            if(frame[i][j]!=0)
                 flag=1;
         }
         if (flag == 1) {
             for (j = 2; j < FRAMEW - 1; j += 2) {
-                if (frame2[i][j] == 0) {
+                if (frame[i][j] == 0) {
                     count = 0;
                     k = i;
-                    while (frame2[k][j] == 0 && k < FRAMEH) {
+                    while (frame[k][j] == 0 && k < FRAMEH) {
                         count++;
                         k++;
                     }
                     k--;
-                    if (frame2[k][j] != 0)
+                    if (frame[k][j] != 0)
                         totalcount += count;
                 }
             }
@@ -101,7 +101,7 @@ int computeTotalHeight()
     int i, j;
     for (i = 1; i < FRAMEH; i++) {
         for (j = 2; j < FRAMEW - 1; j += 2) {
-            if (frame2[i][j] != 0)
+            if (frame[i][j] != 0)
             {
                 height += FRAMEH-i;
             }
@@ -120,7 +120,7 @@ int countCompleteLines()
     for(i=FRAMEH-1; i>=gameHeight; i--) {
         j=0;
         counter = 0;
-        while(frame2[i][j] !=0 && j < FRAMEW) {
+        while(frame[i][j] !=0 && j < FRAMEW) {
             j+=2;
             counter++;
         }
@@ -134,7 +134,7 @@ int maxHeight() {
     int i, j;
     for(i=1; i<FRAMEH-1; i++)
         for(j=2; j<FRAMEW-2; j+=2)
-            if(frame2[i][j] != 0) {
+            if(frame[i][j] != 0) {
                 return i;
             }
     return 0;
@@ -163,7 +163,7 @@ int maxColumnHeight(int columnNb) {
         return 1;
     int i;
     for(i=1; i<FRAMEH-1; i++) {
-        if(frame2[i][columnNb] == 1)
+        if(frame[i][columnNb] == 1)
             return (FRAMEH - i);
     }
     return 0;
