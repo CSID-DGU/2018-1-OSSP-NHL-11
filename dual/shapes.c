@@ -228,7 +228,7 @@ void shape_go_down(int x, int y) {
 		shape_new(x, y);
 		frame_refresh(x, y);
 		sleep(2);
-		running = False;
+		//running = False;
 	}
 
 	return;

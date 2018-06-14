@@ -57,6 +57,7 @@ void printxy(int color, int x, int y, char *str)	//
 {
      set_color(color);	//색 지정
      printf("\e[%d;%dH%s", ++x, ++y, str);
+     fflush(stdout);
      set_color(0);	//초기화
 
      return;

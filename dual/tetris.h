@@ -50,14 +50,14 @@
      printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 10, lifes);   \
      set_color(0);
 
-/*
-#define DRAW_SCORE_ai() set_color(Score);                              \
+
+#define DRAW_SCORE2() set_color(Score);                              \
      printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 60, level);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 60, score);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 60, lines);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 60, lifes);   \
      set_color(0);
-*/
+
 
 /* Bool type */
 typedef enum { False, True } Bool;
@@ -112,14 +112,14 @@ void revive(void);
 
 /* tetris.c */
 char* first(char * name);
-void init(void);
-void init_ai(void);
-void arrange_score(int l);
+void init1(void);
+void init2(void);
+void arrange_score(int l, int play);
 void check_plain_line(int, int);
 int check_possible_pos(int, int);
 void get_key_event(void);
-void quit(char * name, int, int);
-void ai_quit(int, int);
+void quit(int, int, int *);
+void ai_quit(int, int, int *);
 void music(const char * filename, int len);
 void sound(const char * filename, int len);
 
