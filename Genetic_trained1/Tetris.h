@@ -2,24 +2,49 @@
 #define __TETRIS_H__
 
 
+/*frame.c*/
+/* Color enum */
+enum {
+	Black,
+	Blue,
+	Red,
+	Magenta,
+	White,
+	Green,
+	Cyan,
+	Yellow,
+	Test,
+	Test_2,
+	Test_3,
+	Border,
+	Score,
+	ColLast
+};
+void frame_init(void);       //프레임의 색깔지정과 그리기
+void printxy(int color, int x, int y, char *str);
+void frame_refresh(void);      //테트리스 테두리
+void frame_preview(void);
+void set_color(int color);	//색을 지정
+/**/
+
 /* * * * * *
- * MACROS 
+ * MACROS
  * * * * * */
  /** Length of a generated pieces file */
 #define LENGTH 1000
 
 /** If set to 1, display the game board for every move played, if set to 0, displays only the final game board */
 #define DISPLAY 1
- 
+
 /** Board Height */
-#define T_HEIGHT 20 //24
+#define T_HEIGHT 20//24
 /** Visible Board Height */
-#define T_HEIGHT_VIS 18 //20
+#define T_HEIGHT_VIS 20
 /** Board Width */
-#define T_WIDTH 12 //10
+#define T_WIDTH 10//23//10
 
 /** Size of a Tetrimino */
-#define TETRI_SIZE 4
+#define TETRI_SIZE 4//8
 /** Default number of rotations */
 #define T_ROTATION 4
 
@@ -31,10 +56,9 @@
 #define TETRI_Z 4
 #define TETRI_S 5
 #define TETRI_T 6
-//추가
-#define TETRI_P 7 //+ 블록
-#define TETRI_N 8 //. 블록
-#define TETRI_M 9 //작은 ㄱ 블록
+#define TETRI_P 7
+#define TETRI_N 8
+#define TETRI_M 9
 
 /** Contsants for rotations */
 #define ROT_0 0
@@ -43,7 +67,7 @@
 #define ROT_3 3
 
 /** Coefficient to apply to a cleared line */
-#define ROW_VALUE_COEFF 10
+#define ROW_VALUE_COEFF 10//12//23//10
 
 /** Error code */
 #define ERROR -1
@@ -53,15 +77,15 @@
 #define DEPTH 2
 
 /** Number fo Generations for Genetic Algorithm */
-#define GENETIC_GENERATIONS_NB 70 //100
+#define GENETIC_GENERATIONS_NB 2
 /** Number fo Generations for Genetic Algorithm */
-#define GENETIC_GAMES_NB 10 //10
+#define GENETIC_GAMES_NB 1
 /** Number of pieces per game */
 #define GENETIC_PIECES_LENGTH 10000
 /** Number fo coefficients for Genetic ALgorithm */
 #define COEF_NB 4
 /** Number fo individuals in a population */
-#define GENES_NB 25 //100
+#define GENES_NB 2
 /** Mutation factor */
 #define MUT_FACTOR 0.05
 
@@ -75,17 +99,17 @@
 
 
 /* * * * * *
- * GLOBALS 
+ * GLOBALS
  * * * * * */
 /** Array of predefined coefficients for heuristic */
 extern float DEFAULT_COEFS[COEF_NB];
 
 
 /* * * * * *
- * DATA STRUCTURES 
+ * DATA STRUCTURES
  * * * * * */
- 
-/** 
+
+/**
  * Tetrimino Structure
  * */
 typedef struct Tetrimino {
@@ -93,7 +117,7 @@ typedef struct Tetrimino {
 	short type;
 } Tetrimino;
 
-/** 
+/**
  * Game Structure
  * */
 typedef struct Game {
@@ -101,7 +125,7 @@ typedef struct Game {
 	unsigned long long score;
 } Game;
 
-/** 
+/**
  * Move Structure
  * */
 typedef struct Move {
@@ -110,7 +134,7 @@ typedef struct Move {
 	float heuristic;
 } Move;
 
-/** 
+/**
  * Gene Structure
  * */
 typedef struct Gene {
@@ -119,7 +143,7 @@ typedef struct Gene {
 	float fitness;
 } Gene;
 
-/** 
+/**
  * Population Structure
  * */
 typedef struct Population {
@@ -128,21 +152,21 @@ typedef struct Population {
 } Population;
 
 
-/** 
+/**
  * Bitboard.c
  * */
 unsigned short getBitboardValue(unsigned short bitboard, unsigned short indexToRetrieve);
 unsigned short setBitboardValue(unsigned short bitboard, unsigned short indexToRetrieve, unsigned short value);
 
- 
+
 /* * * * * *
- * PROTOTYPES 
+ * PROTOTYPES
  * * * * * */
- 
+
  /**
  *  Game.c
  * */
- 
+
 Game* createGame();
 Game* copyGame(Game* game);
 short addTetrimino(Game* game, Tetrimino* tet, short x);
@@ -156,7 +180,7 @@ short maxTetY(Tetrimino* tet);
 void displayGameBoard(Game* game);
 void freeGame(Game* game);
 
-/** 
+/**
  * Tetrimino.c
  * */
 Tetrimino* createTetrimino(short type);
@@ -174,7 +198,7 @@ void rotateM(Tetrimino* tet, short rotation);
 void displayTetrimino(Tetrimino* tetrimino);
 void freeTetrimino(Tetrimino* tetrimino);
 
-/** 
+/**
  * GameManager.c
  * */
 void generatePiecesFile(int size);
@@ -184,7 +208,7 @@ int playAGame(int numberOfTetriminos, short* piecesArray, int piecesSize, Move* 
 int readPiecesFile(char* filename, short* piecesArray, int maxReadableSize);
 int readMovesFile(char* filename, Move* movesArray, int maxReadableSize);
 
-/** 
+/**
  * AI.c
  * */
 unsigned long long playAIGame(short* piecesArray, unsigned long long piecesSize, float* coefs);
@@ -197,7 +221,7 @@ short computeTotalHeight(Game* game);
 short computeHollowness(Game* game);
 short maxColumnHeight(Game* game, short columnNb);
 
-/** 
+/**
  * Genetic.c
  * */
 float randomTenth(short lowerBound, short upperBound);
@@ -223,4 +247,3 @@ short specificCoefHillClimbing(short** pieces, float* coefs, short* directions, 
 short determineDirection(float* coefs, short indexToDetermine);
 
 #endif
-
