@@ -28,6 +28,7 @@
  *      THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
  *      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
  */
 
 #include <sys/time.h>
@@ -113,6 +114,7 @@ void printxy(int color, int x, int y, char *str)
 	set_color(0);	//초기화
 
 	return;
+
 }
 
 int nrand(int min, int max)	//min에서 max사이의 무작위 정수 설정

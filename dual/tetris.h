@@ -30,6 +30,7 @@
  *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+
 /* Libs */
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,6 +43,7 @@
 #include <sys/wait.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
+
 
 /* Expension factor of shapes */
 #define EXP_FACT 2
@@ -67,6 +69,7 @@
      printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 11, level);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 11, score);   \
      //printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 11, lines);   \
+
      set_color(0);
 
 
@@ -115,6 +118,7 @@ enum {
 	ColLast
 };
 
+
 /* Prototypes */
 
 /* util.c */
@@ -145,6 +149,7 @@ void revive(void);
 
 /* process.c */
 //char* first(char * name);
+
 void init1(void);
 void init2(void);
 void arrange_score(int l, int play);
@@ -157,6 +162,7 @@ void music(const char * filename, int len);
 void sound(const char * filename, int len);
 
 /*ai.c*/
+
 float heuristic(float* coefs);
 int countHoles();
 int computeTotalHeight();
@@ -167,6 +173,7 @@ int maxColumnHeight(int columnNb);
 void AI_shape_go_down(float *coefs);
 
 /* Variables */
+
 const int shapes[10][4][5][2];
 struct itimerval tv;
 struct termios back_attr;
@@ -182,4 +189,5 @@ int flag, flag2;
 
 
 Bool running;
+
 

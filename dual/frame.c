@@ -102,6 +102,7 @@ void frame_refresh(int x, int y)      //테트리스 테두리
 			}
 		}
 	}
+
 	return;
 
 }
@@ -116,6 +117,7 @@ void frame_preview(int x, int y) {
 			if (j % 2 == 1) {
 				printxy(frame[i][j], i+x, j+y, " ");
 			}
+
 			else {
 				if (i == 0 || i == FRAMEH || j == 0 || j == FRAMEW - 1) {
 					printxy(frame[i][j], i+x, j+y, " ");
@@ -130,6 +132,7 @@ void frame_preview(int x, int y) {
 						else{
 							break;
 						}
+
 					}
 				}
 			}
@@ -179,3 +182,4 @@ void frame_nextbox_refresh(int x, int y)       //다음나올 상자와 모양
 
 	return;
 }
+

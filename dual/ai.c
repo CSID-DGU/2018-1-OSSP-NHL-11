@@ -521,7 +521,7 @@ void AI_shape_go_down(float *coefs) {
                 }
                 temp = heuristic(coefs);
                 if (bestMoveHeu < temp) {
-                  
+
                     sleep(1);
                     bestMoveHeu = temp;
                     current.y = width;

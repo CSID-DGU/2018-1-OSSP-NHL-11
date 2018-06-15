@@ -35,6 +35,7 @@ const char *Logo[] = {
 		}
 		printf("\n");
 	}
+
 	printf("\n\n\t당신의 이름은? ");
 	scanf("%s", name);
 	/*	printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
@@ -45,6 +46,7 @@ const char *Logo[] = {
 	 }*/
 	//return name;
 //}*/
+
 
 void init1(void) {
 
@@ -283,8 +285,8 @@ int check_possible_pos(int x, int y) {
 	return c;
 }
 
-void quit(int x, int y, int *share) {
-	
+void quit(int x, int y, int *share) {	
+
 	char end;
 	frame_refresh(x, y); /* Redraw a last time the frame */
 	share[1] = score; //user_score
@@ -318,6 +320,7 @@ void play(int x, int y, int *share) {
 	//shape_unset();
 	//여기까지 게임을 초기화하는 부분
 	while (running) {
+
 		int ranNum = nrand(1, 300);
 		get_key_event();
 		shape_set();
@@ -349,6 +352,7 @@ void play(int x, int y, int *share) {
 		if (share[0] == 5) //ai가 먼저 끝나면 강제 게임 종료
 			break;
 		//shape_unset();
+
 	}
 	//이것이 게임루프의 주축이 되는 부분
 }
@@ -392,6 +396,7 @@ void playAI(int x, int y, int *share) {
 			n--;
 			block_down();
 			flag2 = 0;
+
 		}
 
 		if (ranNum == 108)
@@ -418,6 +423,7 @@ int main(int argc, char **argv) {
 		}
 		printf("\n");
 	}
+
 	printf("\n\n\t당신의 이름은? ");
 	scanf("%s", name);
 	clear_term();
@@ -468,6 +474,7 @@ int main(int argc, char **argv) {
 			share[0] = 5;
 		}
 		ai_quit(0, 50, share);
+
 		wait(&status);
 	}
 	}
@@ -482,6 +489,7 @@ int main(int argc, char **argv) {
 		printf("\n\n\t점수는 같지만 인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
 	}
 	else if (share[1] < share[2]) {
+
 		printf("\n\n\t인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
 	}
 	return 0;

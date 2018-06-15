@@ -119,6 +119,7 @@ const int shapes[10][4][5][2] = {
             }
 };
 
+
 void shape_set(void) {
 	int i, j;
 
@@ -222,6 +223,7 @@ void block_down() {
 	 한줄을 생성해준다.
 	 */
 	sleep(1);
+
 	int ranNum = nrand(2, 21);
 	for (int i = 1; i < FRAMEH; ++i) //이거는 블럭이 있는지 찾아서
 			{                                //있으면 한줄을 올려준다.
@@ -251,6 +253,7 @@ void block_down() {
 	}
 }
 /*
+
 void revive(void) //테트리스 안에 모든 블럭을 초기화 해주는 함수
 {
 	for (int i = 1; i < FRAMEH; ++i) {
@@ -261,6 +264,7 @@ void revive(void) //테트리스 안에 모든 블럭을 초기화 해주는 함
 
 	lifes--;
 }*/
+
 void shape_go_down(int x, int y) {
 
 	shape_unset();
@@ -276,6 +280,7 @@ void shape_go_down(int x, int y) {
 	if (!check_possible_pos(current.x + 1, current.y)) {
 		++current.x;
 	} else if (current.x > 1)
+
 		shape_new(x, y);
 	/*
 	 current.x값이 1이거나 그보다 작다면, Shape가 이동하지 않은 것
@@ -286,6 +291,7 @@ void shape_go_down(int x, int y) {
 		frame_refresh(x, y);
 		sleep(1);
 		running = False;
+
 	}
 
 	return;
@@ -325,11 +331,13 @@ void shape_drop(void) {
 //		exit;
 //	}
 
+
 	while (!check_possible_pos(current.x + 1, current.y)) {
 		shape_unset();
 		++current.x;
 	}
 	//score += 1;//(FRAMEH - current.x) * 2;
+
 	//sound("slip.wav", 300);
 	return;
 }

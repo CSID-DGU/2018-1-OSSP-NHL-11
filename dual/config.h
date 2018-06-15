@@ -1,3 +1,4 @@
+
 /* Configuration of tty-tetris
  * Need to re-compile to set the change.
  */
