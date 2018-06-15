@@ -56,20 +56,19 @@ void init1(void) {
 	current.next = nrand(0, 7); //다음 블록의 종류를 정함
 
 	/* Score(오른쪽에 표시되는 안내사항을 보여주는 */
-	printxy(0, FRAMEH_NB + 1, FRAMEW + 3, "Level :");
-	printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Score :");
-	printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Lines :");
-	printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Left  : ←");
-	printxy(0, FRAMEH_NB + 5, FRAMEW + 3, "Right : →");
-	printxy(0, FRAMEH_NB + 6, FRAMEW + 3, "Change: ↑");
-	printxy(0, FRAMEH_NB + 7, FRAMEW + 3, "Down  : ↓");
-	printxy(0, FRAMEH_NB + 8, FRAMEW + 3, "Drop  : Space Bar");
-	printxy(0, FRAMEH_NB + 9, FRAMEW + 3, "Pause : p");
-	printxy(0, FRAMEH_NB + 10, FRAMEW + 3, "Revive : r");
-	printxy(0, FRAMEH_NB + 11, FRAMEW + 3, "Life : ");
-	printxy(0, FRAMEH_NB + 12, FRAMEW + 3, "Quit  : q");
+	printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Level : ");
+	printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Score : ");
+	printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Lines : ");
 	DRAW_SCORE()
 	;
+
+	printxy(0, FRAMEH_NB + 1, FRAMEW + 80, "Left  : ←");
+	printxy(0, FRAMEH_NB + 2, FRAMEW + 80, "Right : →");
+	printxy(0, FRAMEH_NB + 3, FRAMEW + 80, "Change: ↑");
+	printxy(0, FRAMEH_NB + 4, FRAMEW + 80, "Down  : ↓");
+	printxy(0, FRAMEH_NB + 5, FRAMEW + 80, "Drop  : Space Bar");
+	printxy(0, FRAMEH_NB + 6, FRAMEW + 80, "Pause : p");
+	printxy(0, FRAMEH_NB + 7, FRAMEW + 80, "Quit  : q");
 
 	/* Init signal */
 
@@ -116,18 +115,10 @@ void init2() {
 	current.next = nrand(0, 7); //다음 블록의 종류를 정함
 
 	/* Score(오른쪽에 표시되는 안내사항을 보여주는 */
-	printxy(0, FRAMEH_NB + 1, FRAMEW + 53, "Level :");
-	printxy(0, FRAMEH_NB + 2, FRAMEW + 53, "Score :");
-	printxy(0, FRAMEH_NB + 3, FRAMEW + 53, "Lines :");
-	printxy(0, FRAMEH_NB + 4, FRAMEW + 53, "Left  : ←");
-	printxy(0, FRAMEH_NB + 5, FRAMEW + 53, "Right : →");
-	printxy(0, FRAMEH_NB + 6, FRAMEW + 53, "Change: ↑");
-	printxy(0, FRAMEH_NB + 7, FRAMEW + 53, "Down  : ↓");
-	printxy(0, FRAMEH_NB + 8, FRAMEW + 53, "Drop  : Space Bar");
-	printxy(0, FRAMEH_NB + 9, FRAMEW + 53, "Pause : p");
-	printxy(0, FRAMEH_NB + 10, FRAMEW + 53, "Revive : r");
-	printxy(0, FRAMEH_NB + 11, FRAMEW + 53, "Life : ");
-	printxy(0, FRAMEH_NB + 12, FRAMEW + 53, "Quit  : q");
+	printxy(0, FRAMEH_NB + 2, FRAMEW + 53, "Level : ");
+	printxy(0, FRAMEH_NB + 3, FRAMEW + 53, "Score : ");
+	printxy(0, FRAMEH_NB + 4, FRAMEW + 53, "Lines : ");
+
 	DRAW_SCORE2()
 	;
 
@@ -165,7 +156,8 @@ void get_key_event(void) {
 	case KEY_MOVE_DOWN:
 		++current.x;
 		++score;
-		DRAW_SCORE();
+		DRAW_SCORE()
+		;
 		break;
 	case KEY_CHANGE_POSITION_NEXT:
 		shape_set_position(N_POS);
@@ -183,10 +175,10 @@ void get_key_event(void) {
 	case 'Q':
 		running = False;
 		break; //대문자 Q를 사용할 때 종료
-	case 'r':
-		if (lifes != 0)
-			revive();
-		break;
+		/*	case 'r':
+		 if (lifes != 0)
+		 revive();
+		 break;*/
 		//case 't':                      sleep(5);                         break; //5초 정지
 		//시간 멈추는 능력
 	}
@@ -234,10 +226,6 @@ void arrange_score(int l, int play) {
 }
 
 void check_plain_line(int x, int y) {
-	//if (SDL_Init(SDL_INIT_AUDIO) < 0) {
-	//	exit(0);
-	//}
-
 	int i, j, k, f, c = 0, nl = 0;
 
 	for (i = 1; i < FRAMEH; ++i) {
@@ -328,18 +316,18 @@ void ai_quit(int x, int y, int *share) {
 }
 
 void play(int x, int y, int *share) {
-	/*변수들*/
+	frame_init(x, y);
+	frame_nextbox_init(x, y);
+
 	level = 1;
 	int n = 1;
 	current.last_move = False;
-	lifes = 2;
 	lines = 0;
 
-	frame_init(x, y);
-	frame_nextbox_init(x, y);
+	shape_unset();
 	//여기까지 게임을 초기화하는 부분
 	while (running) {
-		shape_unset();
+
 
 		int ranNum = nrand(1, 300);
 		get_key_event();
@@ -364,29 +352,27 @@ void play(int x, int y, int *share) {
 
 		if (ranNum == 108)
 			n++;
-		//이것이 게임루프의 주축이 되는 부분
-		if (share[0] == 5)
-			break;
-		//sound("violin.wav",9000);
-		//SDL_Quit();
+
 		for (int i = 2; i < FRAMEW - 1; i++) {
 			if (frame[2][i] != 0)
 				running = False;
 		}
+		if (share[0] == 5) //ai가 먼저 끝나면 강제 게임 종료
+			break;
+		shape_unset();
 	}
-
+	//이것이 게임루프의 주축이 되는 부분
 }
 void playAI(int x, int y, int *share) {
+	frame_init(x, y);
+	frame_nextbox_init(x, y);
+
 	level = 1;
 	int n = 1;
 	current.last_move = False;
-	lifes = 2;
 	lines = 0;
 	buf = 0;
 
-	frame_init(x, y);
-	frame_nextbox_init(x, y);
-	//buf = current.x;
 	running = True;
 	while (running) {
 		bestMoveHeu = -FLT_MAX;
@@ -417,7 +403,7 @@ void playAI(int x, int y, int *share) {
 				running = False;
 			}
 		}
-		if (share[0] == 8)
+		if (share[0] == 8) //user가 먼저 끝나면 강제 게임 종료
 			break;
 	}	//이것이 게임루프의 주축이 되는 부분
 }
@@ -447,7 +433,7 @@ int main(int argc, char **argv) {
 		exit(0);
 	}
 	share = (int *) shared_memory;
-	share[0] = 0;
+	share[0] = 0; //종료를 체크하는 flag 변수처럼 사용
 
 	pid_t user = fork();
 
@@ -458,29 +444,37 @@ int main(int argc, char **argv) {
 		printf("자식 프로세스 생성 실패\n");
 		return -1;
 	}
-	case 0: {
+	case 0: { //자식 프로세스 = user
 		init1();
-		play(0, 0, share);
+		play(0, 0, share); //이 함수 내부에 while문과 종료조건 존재
 		if (running == False) {
-			share[0] = 8;
+			share[0] = 8; //user가 먼저 끝나면(죽으면) 8로 변경해서 ai도 종료시킴
 		}
-		quit(0, 0, share);
+		quit(0, 0, share); //score를 공유 변수에 저장
 		break;
 	}
-	default: {
+	default: { //부모 프로세스 = ai
 		init2();
 		playAI(0, 50, share);
 		if (running == False) {
 			share[0] = 5;
 		}
 		ai_quit(0, 50, share);
+		//wait(&status);
 	}
 	}
-
-	if (share[1] > share[2]) {
-		printf("\n\n\n\n%s win\n", name);
-	} else {
-		printf("\n\n\n\nai win \n");
+	//share[1] = user_score, share[2] = ai_score
+	if (share[1] > share[2]) { //게임이 종료되면서 저장했던 각 플레이어의 점수를 비교해서 승자를 가림
+		printf("\n\n\t%s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
+	}
+	if (share[1] == share[2] && share[0] == 5) { //score는 같다 누가 먼저 끝났는지 보고 승자를 가림
+		printf("\n\n\t점수는 같지만 %s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
+	}
+	if (share[1] == share[2] && share[0] == 8) {
+		printf("\n\n\t점수는 같지만 인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
+	}
+	if (share[1] < share[2]) {
+		printf("\n\n\t인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
 	}
 	return 0;
 }

@@ -44,18 +44,16 @@
 
 /* Draw the score.. */
 #define DRAW_SCORE() set_color(Score);                              \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 10, level);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 10, score);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 10, lines);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 10, lifes);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 11, level);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 11, score);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 11, lines);   \
      set_color(0);
 
 
 #define DRAW_SCORE2() set_color(Score);                              \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 2, FRAMEW + 60, level);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 60, score);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 60, lines);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 12, FRAMEW + 60, lifes);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 61, level);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 61, score);   \
+     printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 61, lines);   \
      set_color(0);
 
 

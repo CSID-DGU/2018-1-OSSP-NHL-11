@@ -45,13 +45,14 @@ void frame_nextbox_init(int x, int y)      //다음 나올 모양의 테두리 �
 		frame_nextbox[i][1] = Border;
 		frame_nextbox[i][FRAMEW_NB - 1] = Border;
 		frame_nextbox[i][FRAMEW_NB] = Border;
-
 	}
 	/*border는 색이름이고 nextbox의 테두리의 색깔을 입히는 함수이다.
 
 	 */
-	for (i = 0; i < FRAMEW_NB + 1; ++i)
-		frame_nextbox[0][i] = frame_nextbox[FRAMEH_NB][i] = Border;
+	for (i = 0; i < FRAMEW_NB + 1; ++i){
+		frame_nextbox[0][i] = Border;
+		frame_nextbox[FRAMEH_NB][i] = Border;
+	}
 
 	frame_nextbox_refresh(x,y);    //다음나올 상자
 
@@ -146,15 +147,18 @@ void frame_nextbox_refresh(int x, int y)       //다음나올 상자와 모양
 		/* Draw the frame */
 	for (i = 0; i < FRAMEH_NB + 1; ++i)              //테트리스 다음나올 모양 테두리 그려줌
 		for (j = 0; j < FRAMEW_NB + 1; ++j) {
+			//frame_nextbox[FRAMEH_NB][1] = Border;
 			if (j % 2 == 1) {
 				printxy(frame_nextbox[i][j], i+x, j + FRAMEW + 3+y, " ");
 			} else {
 				if (i == 0 || i == FRAMEH_NB || j == 0 || j == FRAMEW_NB) {
+					frame_nextbox[i][j] = Border;
 					printxy(frame_nextbox[i][j], i+x, j + FRAMEW + 3+y, " ");
 				} else if (frame_nextbox[i][j] != 0) {
 					printxy(frame_nextbox[i][j], i+x, j + FRAMEW + 3+y, "□");
-				} else
+				} else {
 					printxy(frame_nextbox[i][j], i+x, j + FRAMEW + 3+y, " ");
+				}
 			}
 		}
 
