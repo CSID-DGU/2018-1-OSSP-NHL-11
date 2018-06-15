@@ -1,12 +1,35 @@
 /*
- * tetris.h
+ *      tetris.h
+ *      Copyright © 2008 Martin Duquesnoy <xorg62@gmail.com>
+ *      All rights reserved.
  *
- *  Created on: 2018. 5. 15.
- *      Author: kny
+ *      Redistribution and use in source and binary forms, with or without
+ *      modification, are permitted provided that the following conditions are
+ *      met:
+ *
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.
+ *      * Redistributions in binary form must reproduce the above
+ *        copyright notice, this list of conditions and the following disclaimer
+ *        in the documentation and/or other materials provided with the
+ *        distribution.
+ *      * Neither the name of the  nor the names of its
+ *        contributors may be used to endorse or promote products derived from
+ *        this software without specific prior written permission.
+ *
+ *      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *      OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *      SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *      THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef TETRIS_H_
-#define TETRIS_H_
 
 /* Libs */
 #include <stdlib.h>
@@ -20,8 +43,7 @@
 #include <sys/wait.h>
 #include <sys/ipc.h>
 #include <sys/shm.h>
-#include <float.h>
-//#include "audio.h"
+
 
 /* Expension factor of shapes */
 #define EXP_FACT 2
@@ -46,28 +68,29 @@
 #define DRAW_SCORE() set_color(Score);                              \
      printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 11, level);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 11, score);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 11, lines);   \
+     //printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 11, lines);   \
+
      set_color(0);
 
 
 #define DRAW_SCORE2() set_color(Score);                              \
      printf("\033[%d;%dH %d", FRAMEH_NB + 3, FRAMEW + 61, level);   \
      printf("\033[%d;%dH %d", FRAMEH_NB + 4, FRAMEW + 61, score);   \
-     printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 61, lines);   \
+     //printf("\033[%d;%dH %d", FRAMEH_NB + 5, FRAMEW + 61, lines);   \
      set_color(0);
 
-
 /* Bool type */
-typedef enum { False, True } Bool;
+typedef enum {
+	False, True
+} Bool;
 
 /* Shape structure */
-typedef struct
-{
-     int num;
-     int next;
-     int pos;
-     int x, y;
-     Bool last_move;
+typedef struct {
+	int num;
+	int next;
+	int pos;
+	int x, y;
+	Bool last_move;
 } shape_t;
 
 typedef struct
@@ -78,7 +101,23 @@ typedef struct
 } move;
 
 /* Color enum */
-enum { Black, Blue, Red, Magenta, White, Green, Cyan, Yellow, Test, Test_2, Test_3, Border, Score, ColLast };
+enum {
+	Black,
+	Blue,
+	Red,
+	Magenta,
+	White,
+	Green,
+	Cyan,
+	Yellow,
+	Test,
+	Test_2,
+	Test_3,
+	Border,
+	Score,
+	ColLast
+};
+
 
 /* Prototypes */
 
@@ -108,8 +147,9 @@ void shape_drop(void);
 void block_down(void);
 void revive(void);
 
-/* tetris.c */
-char* first(char * name);
+/* process.c */
+//char* first(char * name);
+
 void init1(void);
 void init2(void);
 void arrange_score(int l, int play);
@@ -121,8 +161,8 @@ void ai_quit(int, int, int *);
 void music(const char * filename, int len);
 void sound(const char * filename, int len);
 
-/* ai.c */
-void AI_shape_go_down(float *coefs); //AI_shape_go_down
+/*ai.c*/
+
 float heuristic(float* coefs);
 int countHoles();
 int computeTotalHeight();
@@ -130,6 +170,7 @@ int countCompleteLines();
 int maxHeight();
 int computeHollowness();
 int maxColumnHeight(int columnNb);
+void AI_shape_go_down(float *coefs);
 
 /* Variables */
 
@@ -137,16 +178,16 @@ const int shapes[10][4][5][2];
 struct itimerval tv;
 struct termios back_attr;
 shape_t current;
+int buf;
 int frame[FRAMEH + 1][FRAMEW + 1];
 int frame_nextbox[FRAMEH_NB][FRAMEW_NB];
 int score;
-int lines;
+//int lines;
 int level;
-int lifes;
-int buf;
-float bestMoveHeu;
+float moveHeu, bestMoveHeu;
+int flag, flag2;
+
 
 Bool running;
-//Bool running2;
 
-#endif /* TETRIS_H_ */
+

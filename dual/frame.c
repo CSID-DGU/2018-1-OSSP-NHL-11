@@ -1,8 +1,33 @@
 /*
- * frame.c
+ *      frame.c
+ *      Copyright © 2008 Martin Duquesnoy <xorg62@gmail.com>
+ *      All rights reserved.
  *
- *  Created on: 2018. 5. 15.
- *      Author: kny
+ *      Redistribution and use in source and binary forms, with or without
+ *      modification, are permitted provided that the following conditions are
+ *      met:
+ *
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.
+ *      * Redistributions in binary form must reproduce the above
+ *        copyright notice, this list of conditions and the following disclaimer
+ *        in the documentation and/or other materials provided with the
+ *        distribution.
+ *      * Neither the name of the  nor the names of its
+ *        contributors may be used to endorse or promote products derived from
+ *        this software without specific prior written permission.
+ *
+ *      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *      OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *      SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *      THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "tetris.h"
@@ -31,7 +56,7 @@ void frame_init(int x, int y)        //프레임의 색깔지정과 그리기
 		frame[i][FRAMEW - 1] = Border;  //오른쪽 테두리 색깔지정
 	}
 
-	frame_refresh(x,y);     //테두리 그려줌
+	frame_refresh(x,y);    //테두리 그려줌
 
 	return;
 }
@@ -77,27 +102,14 @@ void frame_refresh(int x, int y)      //테트리스 테두리
 			}
 		}
 	}
-	/*
-	 for(i = 0; i < FRAMEH + 1; ++i)
-	 {
-	 for(j = 0; j < FRAMEW + 1; ++j)
-	 {
-	 if(frame[i][j] != 0)
-	 {
-	 for(k = 0; k < FRAMEH + 1; ++k)
-	 {
-	 printxy(frame[k][j], k, j, "□");
-	 }
-	 }
-	 }
-	 }
-	 */
+
 	return;
 
 }
 
 void frame_preview(int x, int y) {
 	int i, j;
+	int is_there=0, flag=0;
 	int temp;
 
 	for (i = 0; i < FRAMEH + 1; ++i) {
@@ -110,20 +122,26 @@ void frame_preview(int x, int y) {
 				if (i == 0 || i == FRAMEH || j == 0 || j == FRAMEW - 1) {
 					printxy(frame[i][j], i+x, j+y, " ");
 				} else if (frame[i][j] != 0) //위에 블럭이 있을때
-					{
+				{
+					is_there++;
 					for (int k = i; k < FRAMEH - 1; ++k) {
 						if (frame[k + 1][j] == 0) //블록부분의 영역이 바뀌는걸 막아줌
-							printxy(frame[k + 1][j], k+1+x, j+y, "▽");
+						{
+							printxy(frame[k + 1][j], k + 1+x, j+y, "▽");
+						}
+						else{
+							break;
+						}
+
 					}
 				}
 			}
 
 		}
+		if (is_there>=5)	return;
 	}
-
-	return;
-
 }
+
 
 void frame_nextbox_refresh(int x, int y)       //다음나올 상자와 모양
 {

@@ -7,13 +7,35 @@
 
 #include "tetris.h"
 #include "config.h"
+#include <float.h>
 
 float DEFAULT_COEFS[COEF_NB] = { 0.694806, -0.597780, -0.940100, -0.386985 };
 
-/* Functions */
-char* first(char * name) {
+const char *Logo[] = {
 
-	char start;
+		" /######## /######## /######## /#######  /######  /###### ",
+		"|__  ##__/| ##_____/|__  ##__/| ##__  ##|_  ##_/ /##__  ##",
+		"   | ##   | ##         | ##   | ##  \\ ##  | ##  | ##  \\__/",
+		"   | ##   | #####      | ##   | #######/  | ##  |  ###### ",
+		"   | ##   | ##__/      | ##   | ##__  ##  | ##   \\____  ##",
+		"   | ##   | ##         | ##   | ##  \\ ##  | ##   /##  \\ ##",
+		"   | ##   | ########   | ##   | ##  | ## /######|  ######/",
+		"   |__/   |________/   |__/   |__/  |__/|______/ \\______/ "
+
+	};
+
+/* Functions */
+/*char* first(char * name) {
+
+	int i, j;
+	//char start;
+	for (i = 0; i < 8; i++) {
+		for (j = 0; j < 60; j++) {
+				printf("%c", Logo[i][j]);
+		}
+		printf("\n");
+	}
+
 	printf("\n\n\t당신의 이름은? ");
 	scanf("%s", name);
 	/*	printf("\n\n\t\t\tpress enter to enter game!");	 //tab세번이 적절
@@ -22,8 +44,10 @@ char* first(char * name) {
 	 if (start == '\n')
 	 break;
 	 }*/
-	return name;
-}
+	//return name;
+//}*/
+
+
 void init1(void) {
 
 	struct sigaction siga1;
@@ -58,7 +82,7 @@ void init1(void) {
 	/* Score(오른쪽에 표시되는 안내사항을 보여주는 */
 	printxy(0, FRAMEH_NB + 2, FRAMEW + 3, "Level : ");
 	printxy(0, FRAMEH_NB + 3, FRAMEW + 3, "Score : ");
-	printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Lines : ");
+	//printxy(0, FRAMEH_NB + 4, FRAMEW + 3, "Lines : ");
 	DRAW_SCORE()
 	;
 
@@ -117,7 +141,7 @@ void init2() {
 	/* Score(오른쪽에 표시되는 안내사항을 보여주는 */
 	printxy(0, FRAMEH_NB + 2, FRAMEW + 53, "Level : ");
 	printxy(0, FRAMEH_NB + 3, FRAMEW + 53, "Score : ");
-	printxy(0, FRAMEH_NB + 4, FRAMEW + 53, "Lines : ");
+	//printxy(0, FRAMEH_NB + 4, FRAMEW + 53, "Lines : ");
 
 	DRAW_SCORE2()
 	;
@@ -194,25 +218,25 @@ void arrange_score(int l, int play) {
 		score += 40;
 		break; /* One line */
 	case 2:
-		score += 100;
+		score += 80;
 		break; /* Two lines */
 	case 3:
-		score += 300;
+		score += 100;
 		break; /* Three lines */
 	case 4:
-		score += 1200;
+		score += 200;
 		break; /* Four lines */
 	}
 
 	if (score >= 100)  //레벨 추가
 		level = 2;
-	if (score >= 400)
+	if (score >= 500)
 		level = 3;
-	if (score >= 700)
-		level = 4;
 	if (score >= 1000)
+		level = 4;
+	if (score >= 2000)
 		level = 5;
-	lines += l;
+	//lines += l;
 
 	if (play == 0) {
 		DRAW_SCORE()
@@ -233,6 +257,7 @@ void check_plain_line(int x, int y) {
 			if (frame[i][j] == 0)
 				++c;
 		if (!c) {
+			usleep(1000000);
 			++nl;
 			//sound("pop.wav",400);
 			for (k = i - 1; k > 1; --k)
@@ -260,48 +285,16 @@ int check_possible_pos(int x, int y) {
 	return c;
 }
 
-void quit(int x, int y, int *share) {
-	/*
-	 FILE *rp;
-	 rp = fopen("score.txt", "a+");
-	 int best_sc;
-	 fscanf(rp, "%d", &best_sc);
-	 */
+void quit(int x, int y, int *share) {	
 
 	char end;
 	frame_refresh(x, y); /* Redraw a last time the frame */
 	share[1] = score; //user_score
 
-	//set_cursor(True); //이 함수로인해 터미널창 커서가 숨김에서 풀린다
-	//tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미,
-
-	/*	if (best_sc < score) {
-	 printf("\n\n\n%d ", best_sc);
-	 if (best_sc != 0) {
-	 FILE *wp;
-	 wp = fopen("score.txt", "w");
-	 fprintf(wp, "%d", score);
-	 fclose(wp);
-	 } else {
-	 fprintf(rp, "%d", score);
-	 printf("\n\n\nsad");
-	 }
-	 printf("\n\n\t%s님 축하합니다. 레벨 %d, 최고점수 %d 점을 달성했습니다.\n\n", name, level,
-	 score);
-	 } else {
-	 printf("\n\n\t%s님 수고하셨습니다. 레벨 %d, 점수는: %d입니다.\n\n", name, level, score);
-	 }
-	 fclose(rp);
-
-	 printf("\n\n\t\t\tpress enter to end the game!\n");
-	 while (1) {
-	 end = getchar();
-	 if (end == '\n')
-	 break;
-	 }*/
+	
 	set_cursor(True);
 	tcsetattr(0, TCSANOW, &back_attr); //TCSANOW는 즉시속성을 변경을 의미, 터미널 세팅을 되돌리기
-	//system("clear"); //입력창이 다 밑으로 내려가서 이걸로하면 다시위로감
+	
 	return;
 }
 void ai_quit(int x, int y, int *share) {
@@ -322,12 +315,11 @@ void play(int x, int y, int *share) {
 	level = 1;
 	int n = 1;
 	current.last_move = False;
-	lines = 0;
+	//lines = 0;
 
-	shape_unset();
+	//shape_unset();
 	//여기까지 게임을 초기화하는 부분
 	while (running) {
-
 
 		int ranNum = nrand(1, 300);
 		get_key_event();
@@ -354,12 +346,13 @@ void play(int x, int y, int *share) {
 			n++;
 
 		for (int i = 2; i < FRAMEW - 1; i++) {
-			if (frame[2][i] != 0)
+			if (frame[1][i] != 0)
 				running = False;
 		}
 		if (share[0] == 5) //ai가 먼저 끝나면 강제 게임 종료
 			break;
-		shape_unset();
+		//shape_unset();
+
 	}
 	//이것이 게임루프의 주축이 되는 부분
 }
@@ -368,14 +361,15 @@ void playAI(int x, int y, int *share) {
 	frame_nextbox_init(x, y);
 
 	level = 1;
+  	int i;
 	int n = 1;
 	current.last_move = False;
-	lines = 0;
+	//lines = 0;
 	buf = 0;
-
+	flag2 = 0;
 	running = True;
 	while (running) {
-		bestMoveHeu = -FLT_MAX;
+		//bestMoveHeu = -FLT_MAX;
 		int ranNum = nrand(1, 300);
 
 		shape_set();
@@ -387,19 +381,31 @@ void playAI(int x, int y, int *share) {
 
 		AI_shape_go_down(DEFAULT_COEFS);
 
+		if (buf >= FRAMEH - 2) {
+			usleep(100000);
+			flag2 = 1;	// when one block checks all!
+			shape_new(x, y);
+			bestMoveHeu = -FLT_MAX;
+			buf = 0;
+		}
+
 		if (score > 2000)
 			printxy(0, FRAMEH_NB + 13, FRAMEW + 3, "***블록이 안보입니다***");
 
-		if (n >= 1 && score >= 100) {
+		if (n >= 1 && score >= 100 && flag2 == 1) {
 			n--;
 			block_down();
+			flag2 = 0;
+
 		}
 
 		if (ranNum == 108)
 			n++;
+		flag2=0;
 
 		for (int i = 2; i < FRAMEW - 1; i++) {
-			if (frame[1][i] != 0) {
+			if (frame[4][i] != 0) {
+
 				running = False;
 			}
 		}
@@ -410,6 +416,14 @@ void playAI(int x, int y, int *share) {
 int main(int argc, char **argv) {
 
 	char name[10];
+	int i, j;
+	for (i = 0; i < 8; i++) {
+		for (j = 0; j < 59; j++) {
+				printf("%c", Logo[i][j]);
+		}
+		printf("\n");
+	}
+
 	printf("\n\n\t당신의 이름은? ");
 	scanf("%s", name);
 	clear_term();
@@ -460,20 +474,22 @@ int main(int argc, char **argv) {
 			share[0] = 5;
 		}
 		ai_quit(0, 50, share);
-		//wait(&status);
+
+		wait(&status);
 	}
 	}
 	//share[1] = user_score, share[2] = ai_score
 	if (share[1] > share[2]) { //게임이 종료되면서 저장했던 각 플레이어의 점수를 비교해서 승자를 가림
 		printf("\n\n\t%s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
 	}
-	if (share[1] == share[2] && share[0] == 5) { //score는 같다 누가 먼저 끝났는지 보고 승자를 가림
+	else if (share[1] == share[2] && share[0] == 5) { //score는 같다 누가 먼저 끝났는지 보고 승자를 가림
 		printf("\n\n\t점수는 같지만 %s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
 	}
-	if (share[1] == share[2] && share[0] == 8) {
+	else if (share[1] == share[2] && share[0] == 8) {
 		printf("\n\n\t점수는 같지만 인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
 	}
-	if (share[1] < share[2]) {
+	else if (share[1] < share[2]) {
+
 		printf("\n\n\t인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
 	}
 	return 0;

@@ -1,8 +1,33 @@
 /*
- * shapes.c
+ *      shapes.c
+ *      Copyright © 2008 Martin Duquesnoy <xorg62@gmail.com>
+ *      All rights reserved.
  *
- *  Created on: 2018. 5. 15.
- *      Author: kny
+ *      Redistribution and use in source and binary forms, with or without
+ *      modification, are permitted provided that the following conditions are
+ *      met:
+ *
+ *      * Redistributions of source code must retain the above copyright
+ *        notice, this list of conditions and the following disclaimer.
+ *      * Redistributions in binary form must reproduce the above
+ *        copyright notice, this list of conditions and the following disclaimer
+ *        in the documentation and/or other materials provided with the
+ *        distribution.
+ *      * Neither the name of the  nor the names of its
+ *        contributors may be used to endorse or promote products derived from
+ *        this software without specific prior written permission.
+ *
+ *      THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ *      "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ *      LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ *      A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ *      OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ *      SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ *      LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ *      DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ *      THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ *      (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ *      OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
 #include "tetris.h"
@@ -14,53 +39,86 @@
  */
 
 const int shapes[10][4][5][2] = {
-/* O */
-/* 정사각형 */
-{ { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 }, { 1, 1 } }, { { 0, 0 }, { 1, 0 }, {
-		0, 1 }, { 1, 1 }, { 1, 1 } }, { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 },
-		{ 1, 1 } }, { { 0, 0 }, { 1, 0 }, { 0, 1 }, { 1, 1 }, { 1, 1 } } },
-/* I */
-/* 일자형 막대 */
-{ { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 3 }, { 1, 3 } }, { { 0, 1 }, { 1, 1 }, {
-		2, 1 }, { 3, 1 }, { 3, 1 } }, { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 3 },
-		{ 1, 3 } }, { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 3, 1 }, { 3, 1 } } },
-/* L */
-/* 오른쪽 방향 ㄴ자 블록 */
-{ { { 0, 1 }, { 1, 1 }, { 2, 1 }, { 2, 2 }, { 2, 2 } }, { { 1, 0 }, { 1, 1 }, {
-		1, 2 }, { 2, 0 }, { 2, 0 } }, { { 0, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 },
-		{ 2, 1 } }, { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 0, 2 }, { 0, 2 } } },
-/* J */
-/* 왼쪽 방향 ㄱ자 블록 */
-{ { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 2, 2 }, { 2, 2 } }, { { 0, 2 }, { 1, 2 }, {
-		2, 2 }, { 2, 1 }, { 2, 1 } }, { { 0, 0 }, { 1, 0 }, { 1, 1 }, { 1, 2 },
-		{ 1, 2 } }, { { 0, 1 }, { 0, 2 }, { 1, 1 }, { 2, 1 }, { 2, 1 } } },
-/* S */
-/* S자 블록 */
-{ { { 1, 1 }, { 1, 2 }, { 2, 0 }, { 2, 1 }, { 2, 1 } }, { { 0, 1 }, { 1, 1 }, {
-		1, 2 }, { 2, 2 }, { 2, 2 } }, { { 1, 1 }, { 1, 2 }, { 2, 0 }, { 2, 1 },
-		{ 2, 1 } }, { { 0, 1 }, { 1, 1 }, { 1, 2 }, { 2, 2 }, { 2, 2 } } },
-/* Z */
-/* Z자 블록 */
-{ { { 0, 0 }, { 0, 1 }, { 1, 1 }, { 1, 2 }, { 1, 2 } }, { { 0, 2 }, { 1, 1 }, {
-		2, 1 }, { 1, 2 }, { 1, 2 } }, { { 0, 0 }, { 0, 1 }, { 1, 1 }, { 1, 2 },
-		{ 1, 2 } }, { { 0, 2 }, { 1, 1 }, { 2, 1 }, { 1, 2 }, { 1, 2 } } },
-/* T */
-/* T 블록 */
-{ { { 0, 1 }, { 1, 0 }, { 1, 1 }, { 1, 2 }, { 1, 2 } }, { { 0, 1 }, { 1, 1 }, {
-		1, 2 }, { 2, 1 }, { 2, 1 } }, { { 1, 0 }, { 1, 1 }, { 1, 2 }, { 2, 1 },
-		{ 2, 1 } }, { { 1, 0 }, { 0, 1 }, { 1, 1 }, { 2, 1 }, { 2, 1 } } },
-/* + 블록 */
-{ { { 1, 0 }, { 0, 1 }, { 2, 1 }, { 1, 2 }, { 1, 1 } }, { { 1, 0 }, { 0, 1 }, {
-		2, 1 }, { 1, 2 }, { 1, 1 } }, { { 1, 0 }, { 0, 1 }, { 2, 1 }, { 1, 2 },
-		{ 1, 1 } }, { { 1, 0 }, { 0, 1 }, { 2, 1 }, { 1, 2 }, { 1, 1 } } },
-/* . 블록 */
-{ { { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 } }, { { 1, 1 }, { 1, 1 }, {
-		1, 1 }, { 1, 1 }, { 1, 1 } }, { { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 },
-		{ 1, 1 } }, { { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 }, { 1, 1 } } },
 
-{ { { 0, 0 }, { 0, 1 }, { 1, 1 }, { 0, 1 }, { 0, 1 } }, { { 1, 0 }, { 1, 1 }, {
-		0, 1 }, { 0, 1 }, { 0, 1 } }, { { 1, 1 }, { 0, 1 }, { 0, 0 }, { 0, 0 },
-		{ 0, 0 } }, { { 1, 0 }, { 0, 0 }, { 0, 1 }, { 0, 1 }, { 0, 1 } } }, };
+        /* O */
+            /* 정사각형 */
+            {
+                 {{2,0},{2,1},{3,0},{3,1},{3,1}},
+                 {{2,0},{2,1},{3,0},{3,1},{3,1}},
+                 {{2,0},{2,1},{3,0},{3,1},{3,1}},
+                 {{2,0},{2,1},{3,0},{3,1},{3,1}}
+            },
+            /* I */
+            /* 일자형 막대 */
+            {
+                 {{2,0},{2,1},{2,2},{2,3},{2,3}},
+                 {{0,0},{1,0},{2,0},{3,0},{3,0}},
+                 {{2,0},{2,1},{2,2},{2,3},{2,3}},
+                 {{0,0},{1,0},{2,0},{3,0},{3,0}}
+            },
+            /* L */
+            /* 오른쪽 방향 ㄴ자 블록 */
+            {
+                 {{3,0},{3,1},{3,2},{2,2},{2,2}},
+                 {{1,0},{1,1},{2,1},{3,1},{3,1}},
+                 {{2,2},{2,1},{2,0},{3,0},{3,0}},
+                 {{1,0},{2,0},{3,0},{3,1},{3,1}}
+            },
+            /* J */
+            /* 왼쪽 방향 ㄱ자 블록 */
+            {
+                 {{1,1},{1,0},{2,0},{3,0},{3,0}},
+                 {{2,0},{2,1},{2,2},{3,2},{3,2}},
+                 {{3,0},{3,1},{2,1},{1,1},{1,1}},
+                 {{2,0},{3,0},{3,1},{3,2},{3,2}}
+            },
+            /* S */
+            /* S자 블록 */
+            {
+                 {{3,0},{3,1},{2,1},{2,2},{2,2}},
+                 {{1,0},{2,0},{2,1},{3,1},{3,1}},
+                 {{3,0},{3,1},{2,1},{2,2},{2,2}},
+                 {{1,0},{2,0},{2,1},{3,1},{3,1}}
+            },
+            /* Z */
+            /* Z자 블록 */
+            {
+                 {{2,0},{2,1},{3,1},{3,2},{3,2}},
+                 {{1,1},{2,1},{2,0},{3,0},{3,0}},
+                 {{2,0},{2,1},{3,1},{3,2},{3,2}},
+                 {{1,1},{2,1},{2,0},{3,0},{3,0}}
+            },
+            /* T */
+            /* T 블록 */
+            {
+                 {{1,0},{2,0},{3,0},{2,1},{2,1}},
+                 {{2,0},{2,1},{2,2},{3,1},{3,1}},
+                 {{1,1},{2,1},{3,1},{2,0},{2,0}},
+                 {{2,1},{3,0},{3,1},{3,2},{3,2}}
+            },
+            /* + 블록 */
+            {
+                 {{2,0},{1,1},{3,1},{2,2},{2,1}},
+                 {{2,0},{1,1},{3,1},{2,2},{2,1}},
+                 {{2,0},{1,1},{3,1},{2,2},{2,1}},
+                 {{2,0},{1,1},{3,1},{2,2},{2,1}}
+            },
+            /* . 블록 */
+            {
+                 {{2,0},{2,0},{2,0},{2,0},{2,0}},
+                 {{2,0},{2,0},{2,0},{2,0},{2,0}},
+                 {{2,0},{2,0},{2,0},{2,0},{2,0}},
+                 {{2,0},{2,0},{2,0},{2,0},{2,0}}
+            },
+            /* small ㄱ자 블록 */
+            {
+                 {{2,0},{2,1},{3,1},{3,1},{3,1}},
+                 {{3,0},{2,1},{3,1},{3,1},{3,1}},
+                 {{2,0},{3,1},{3,0},{3,0},{3,0}},
+                 {{2,0},{3,0},{2,1},{2,1},{2,1}}
+            }
+};
+
 
 void shape_set(void) {
 	int i, j;
@@ -141,7 +199,7 @@ void shape_new(int x, int y) {
 	 다음 next 값은 0~7 사이의 무작위 정수로 설정된다.
 	 */
 	current.num = current.next;
-	current.x = 1; // 새로운 블록이 생성되는 위치
+	current.x = 0; // 새로운 블록이 생성되는 위치
 	current.y = (FRAMEW / 2) - 1;
 	current.next = nrand(0, 9);
 	// current.next = nrand(0, 8);을 하면 투명 블록이 생성된다.
@@ -164,6 +222,8 @@ void block_down() {
 	 맨 아랫줄에 랜덤으로 한칸이 비어있는 블럭
 	 한줄을 생성해준다.
 	 */
+	sleep(1);
+
 	int ranNum = nrand(2, 21);
 	for (int i = 1; i < FRAMEH; ++i) //이거는 블럭이 있는지 찾아서
 			{                                //있으면 한줄을 올려준다.
@@ -192,6 +252,7 @@ void block_down() {
 		frame[19][ranNum + 1] = 0;
 	}
 }
+/*
 
 void revive(void) //테트리스 안에 모든 블럭을 초기화 해주는 함수
 {
@@ -202,7 +263,7 @@ void revive(void) //테트리스 안에 모든 블럭을 초기화 해주는 함
 	}
 
 	lifes--;
-}
+}*/
 
 void shape_go_down(int x, int y) {
 
@@ -218,7 +279,8 @@ void shape_go_down(int x, int y) {
 	 */
 	if (!check_possible_pos(current.x + 1, current.y)) {
 		++current.x;
-	} else if (current.x > 2)
+	} else if (current.x > 1)
+
 		shape_new(x, y);
 	/*
 	 current.x값이 1이거나 그보다 작다면, Shape가 이동하지 않은 것
@@ -227,8 +289,9 @@ void shape_go_down(int x, int y) {
 	else {
 		shape_new(x, y);
 		frame_refresh(x, y);
-		sleep(2);
-		//running = False;
+		sleep(1);
+		running = False;
+
 	}
 
 	return;
@@ -264,11 +327,17 @@ void shape_move(int n) {
 }
 
 void shape_drop(void) {
+//	if (SDL_Init(SDL_INIT_AUDIO) < 0) {
+//		exit;
+//	}
+
+
 	while (!check_possible_pos(current.x + 1, current.y)) {
 		shape_unset();
 		++current.x;
 	}
-	score += (FRAMEH - current.x) * 2;
+	//score += 1;//(FRAMEH - current.x) * 2;
+
 	//sound("slip.wav", 300);
 	return;
 }
