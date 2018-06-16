@@ -9,7 +9,7 @@
 #include "config.h"
 #include <float.h>
 
-float DEFAULT_COEFS[COEF_NB] = { 0.694806, -0.597780, -0.940100, -0.386985 };
+float DEFAULT_COEFS[COEF_NB] = { 0.244451, -0.190498, -0.491333, -0.001709 };
 
 const char *Logo[] = {
 
@@ -449,11 +449,11 @@ int main(int argc, char **argv) {
 	share = (int *) shared_memory;
 	share[0] = 0; //종료를 체크하는 flag 변수처럼 사용
 
-	pid_t user = fork();
+	pid_t game = fork();
 
 	int ai_score, user_score;
 
-	switch (user) {
+	switch (game) {
 	case -1: {
 		printf("자식 프로세스 생성 실패\n");
 		return -1;
@@ -482,14 +482,10 @@ int main(int argc, char **argv) {
 	if (share[1] > share[2]) { //게임이 종료되면서 저장했던 각 플레이어의 점수를 비교해서 승자를 가림
 		printf("\n\n\t%s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
 	}
-	else if (share[1] == share[2] && share[0] == 5) { //score는 같다 누가 먼저 끝났는지 보고 승자를 가림
-		printf("\n\n\t점수는 같지만 %s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
+	else if (share[1] == share[2] ) { //score는 같다 누가 먼저 끝났는지 보고 승자를 가림
+		printf("\n\n\t%s님과 인공지능님이 점수가 %d로 동점입니다.\n\n", name, share[1]);
 	}
-	else if (share[1] == share[2] && share[0] == 8) {
-		printf("\n\n\t점수는 같지만 인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
-	}
-	else if (share[1] < share[2]) {
-
+	else { //share[1] < share[2]
 		printf("\n\n\t인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
 	}
 	return 0;
