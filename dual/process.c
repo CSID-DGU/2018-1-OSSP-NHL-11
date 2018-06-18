@@ -9,8 +9,7 @@
 #include "config.h"
 #include <float.h>
 
-float DEFAULT_COEFS[COEF_NB] = { 0.728118, -0.194489, -0.913055, -0.130114  };
-
+float DEFAULT_COEFS[COEF_NB] = { 0.728118, -0.194489, -0.913055, -0.130114  };//{ 0.244451, -0.190498, -0.491333, -0.001709 };
 const char *Logo[] = {
 
 		" /######## /######## /######## /#######  /######  /###### ",
@@ -482,15 +481,15 @@ int main(int argc, char **argv) {
 	//share[1] = user_score, share[2] = ai_score
 	if (share[1] > share[2]) { //게임이 종료되면서 저장했던 각 플레이어의 점수를 비교해서 승자를 가림
 		printf("\n\n\t%s님이 이겼습니다! 점수는 %d입니다.\n\n", name, share[1]);
-		return 0;
+		exit(1);
 	}
 	else if (share[1] == share[2] ) { //score는 같다 누가 먼저 끝났는지 보고 승자를 가림
 		printf("\n\n\t%s님과 인공지능님이 점수가 %d로 동점입니다.\n\n", name, share[1]);
-		return 0;
+		exit(1);
 	}
 	else { //share[1] < share[2]
 		printf("\n\n\t인공지능님이 이겼습니다! 점수는 %d입니다.\n\n", share[2]);
-		return 0;
+		exit(1);
 	}
 	return 0;
 }
